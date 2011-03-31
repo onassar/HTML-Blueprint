@@ -45,8 +45,14 @@
                     } else if (assets.constructor === Array) {
                         if (assets.length) {
                             __boot(assets.shift(), function() {
-                                __boot(assets, callback);
+                                boot(assets, callback);
                             });
+                        } else {
+                            try {
+                                callback && callback();
+                            } catch(exception) {
+                                log('[Caught Exception]', exception);
+                            }
                         }
                     }
                 },
