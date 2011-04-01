@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <script type="text/javascript">
+        //<![CDATA[
+            // performance logging setup; booting; console logging; function queueing
+            var start = (new Date()).getTime(),
+                boot = function(assets, callback) {
+
+                    // booter
+                    var __boot = function(src, callback) {
+                        var script = document.createElement('script'),
+                            scripts = document.getElementsByTagName('script'),
+                            length = scripts.length,
+                            loaded = function() {
+                                try {
+                                    callback && callback();
+                                } catch(exception) {
+                                    log('[Caught Exception]', exception);
+                                }
+                            };
+                        script.setAttribute('type', 'text/javascript');
+                        script.setAttribute('charset', 'utf-8');
+                        if (script.readyState) {
+                            script.onreadystatechange = function() {
+                                if (
+                                    script.readyState === 'loaded'
+                                    || script.readyState === 'complete'
+                                ) {
+                                    script.onreadystatechange = null;
+                                    loaded();
+                                }
+                            };
+                        } else {
+                            script.onload = loaded;
+                        }
+                        script.setAttribute('src', src);
+                        document.body.insertBefore(script, scripts[(length - 1)].nextSibling);
+                    };
+
+                    // assets check
+                    if (typeof assets === 'string') {
+                        __boot(assets, callback);
+                    } else if (assets.constructor === Array) {
+                        if (assets.length) {
+                            __boot(assets.shift(), function() {
+                                __boot(assets, callback);
+                            });
+                        }
+                    }
+                },
+                log = function() {
+                    if (
+                        typeof(console) !== 'undefined'
+                        && console
+                        && console.log
+                    ) {
+                        var args = arguments.length > 1 ? arguments : arguments[0];
+                        console.log(args);
+                    }
+                },
+                queue = (function() {
+                    var stack = [];
+                    return {
+                        push: function(task) {
+                            stack.push(task);
+                        },
+                        process: function() {
+                            var task;
+                            while (task = stack.shift()) { task(); }
+                        }
+                    };
+                })();
+        //]]>
+        </script>
+        <title>(sample)</title>
+    </head>
+    <body>
+        <div id="wrapper">content...</div>
+        <script type="text/javascript">
+        //<![CDATA[
+            queue.push(function() {
+                log('hello world');
+            });
+            setTimeout(function() {
+                boot(
+                    ['/js/1.js', '/js/2.js'],
+                    function() {
+                        queue.process();
+                    }
+                );
+            }, 50);
+        //]]>
+        </script>
+    </body>
+</html>
+
