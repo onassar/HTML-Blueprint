@@ -6,6 +6,18 @@
         <link href="http://meyerweb.com/eric/tools/css/reset/reset.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript">
         //<![CDATA[
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-xxxxxx-xx']);
+            _gaq.push(['_trackPageview']);
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })(); 
+        //]]>
+        </script>
+        <script type="text/javascript">
+        //<![CDATA[
             var start=(new Date()).getTime(),booted=[],loading=[],js=function(assets,callback){var __contains=function(arr,query){for(var x=0,l=arr.length;x<l;++x){if(arr[x]===query){return true;}}return false;},__remove=function(arr,record){var j=0;while(j<arr.length){if(arr[j]===record){arr.splice(j,1);}else{j++;}}return arr;},__boot=function(src,fn){var script=document.createElement('script'),scripts=document.getElementsByTagName('script'),length=scripts.length,loaded=function(){booted.push(src);loading=__remove(loading,src);fn&&fn();};script.setAttribute('type','text/javascript');script.setAttribute('charset','utf-8');if(script.readyState){script.onreadystatechange=function(){if(script.readyState==='loaded'||script.readyState==='complete'){script.onreadystatechange=null;loaded();}};}else{script.onload=loaded;}script.setAttribute('src',src);document.body.insertBefore(script,scripts[(length-1)].nextSibling);};if(typeof assets==='string'){if(__contains(booted,assets)){callback();}else if(__contains(loading,assets)){setTimeout(function(){js(assets,callback);},10);}else{loading.push(assets);__boot(assets,callback);}}else if(assets.constructor===Array){if(assets.length!==0){js(assets.shift(),function(){js(assets,callback);});}else{callback&&callback();}}},log=function(){if(typeof(console)!=='undefined'&&console&&console.log){var args=arguments.length>1?arguments:arguments[0];console.log(args);}},queue=(function(){var stack=[];return{push:function(task){stack.push(task);},process:function(){var task;while(task=stack.shift()){task();}}};})();
         //]]>
         </script>
@@ -20,7 +32,9 @@
             function ready(callback){var done=false,top=true,doc=window.document,root=doc.documentElement,add=doc.addEventListener?'addEventListener':'attachEvent',rem=doc.addEventListener?'removeEventListener':'detachEvent',pre=doc.addEventListener?'':'on',init=function(e){if(e.type==='readystatechange'&&doc.readyState!=='complete'){return;}(e.type==='load'?window:doc)[rem](pre+e.type,init,false);if(!done&&(done=true)){callback.call(window,e.type||e);}},poll=function(){try{root.doScroll('left');}catch(e){setTimeout(poll,50);return;}init('poll');};if(doc.readyState==='complete'){callback.call(window,'lazy');}else{if(doc.createEventObject&&root.doScroll){try{top=!window.frameElement;}catch(e){}if(top){poll();}}doc[add](pre+'DOMContentLoaded',init,false);doc[add](pre+'readystatechange',init,false);window[add](pre+'load',init,false);}}
             ready(function() {
                 js(
-                    [],
+                    [
+                        'https://ajax.googleapis.com/ajax/libs/mootools/1.4.1/mootools-yui-compressed.js'
+                    ],
                     function() {
                         log('pre: ', (new Date()).getTime() - start);
                         queue.process();
