@@ -14,7 +14,7 @@ performing the following:
 [JS-Fondation](https://github.com/onassar/JS-Foundation) library
  - Loading in the HTML5 shiv (for non-modern browsers)
  - Booting in the required scripts after the DOM is ready (including, by default
-[MooTools]()http://mootools.net/)
+[MooTools](http://mootools.net/)
  - Processing the stack of functions that have been queued up
 
 The above events are included in this blueprint as they were what I found helped
