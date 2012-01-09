@@ -12,7 +12,7 @@ performing the following:
  - Defining Open Graph meta tags/information
  - Loading in the minified
 [JS-Foundation](https://github.com/onassar/JS-Foundation) library
- - Loading in the HTML5 shiv (for non-modern browsers)
+ - Loading in the [HTML5 shiv](//html5shiv.googlecode.com/svn/trunk/html5.js) (for non-modern browsers)
  - Booting in the required scripts after the DOM is ready (including, by default
 [MooTools](http://mootools.net/)
  - Processing the stack of functions that have been queued up
